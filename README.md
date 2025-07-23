@@ -61,8 +61,8 @@ A classification model outputs binary labels (good/bad behavior), and scores are
 1. Clone the repo
 
 ```bash
-git clone https://github.com/yourusername/defi-credit-score.git
-cd defi-credit-score
+git clone https://github.com/yourusername/Zeru-Assignment.git
+cd Zeru-Assignment
 ```
 
 2. Install dependencies
