@@ -87,12 +87,3 @@ jupyter notebook credit_score_classification.ipynb
 
 ---
 
-## 📃 License
-
-MIT License
-
----
-
-## 🚀 Contributors
-
-Built by \[Your Name], 2025
