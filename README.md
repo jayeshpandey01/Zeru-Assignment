@@ -1,61 +1,98 @@
+# 📊 Credit Score Classification using Aave V2 Transaction Data
+
+## 🔍 Overview
+
+This project uses historical transaction-level data from the Aave V2 DeFi protocol to predict a **credit score (ranging from 0 to 1000)** for each wallet address. The main goal is to evaluate wallet behavior and classify it as responsible, risky, or bot-like using only transaction behavior features.
 
 ---
 
-### 📊 Credit Score Classification from DeFi Transactions
+## 🔢 Methodology
 
-This notebook implements a machine learning pipeline to predict a **credit score (0–1000)** for DeFi wallets based on their **transaction history** with the **Aave V2 protocol**.
+### 1. **Data Source**
 
-#### 🔍 Problem Statement
+The model uses raw JSON transaction data that includes key actions:
 
-The goal is to assess wallet reliability by analyzing behaviors such as:
+* `deposit`
+* `borrow`
+* `repay`
+* `redeemUnderlying`
+* `liquidationCall`
 
-* Deposits
-* Borrows
-* Repayments
-* Liquidations
-* Withdrawals
+Each row is a single wallet transaction.
 
-Higher credit scores indicate responsible and consistent usage, while lower scores may reflect risky, exploitative, or bot-like behavior.
+### 2. **Feature Engineering**
+
+We derived key behavioral features from the raw data:
+
+* Total number and amount of deposits/borrows/repayments
+* Liquidation count and liquidation ratio
+* Average transaction amount per action
+* Recency and activity frequency
+
+### 3. **Score Bucketing**
+
+A classification model outputs binary labels (good/bad behavior), and scores are scaled post-prediction to a **0-1000** range:
+
+* Class 1 ➔ Score between 600-1000
+* Class 0 ➔ Score between 0-600 (scaled by confidence)
+
+### 4. **Model Architecture**
+
+* Input: Engineered feature vector
+* Hidden Layer: Fully connected (30 neurons, ReLU)
+* Output Layer: 1 neuron with Sigmoid activation
+* Loss: Binary Cross Entropy Loss (BCELoss)
+* Optimizer: Adam
 
 ---
 
-### 📁 File
+## 🌐 Project Files
 
-* `credit_score_classification.ipynb`: End-to-end pipeline including:
-
-  * Data preprocessing
-  * Feature engineering
-  * Model training (PyTorch)
-  * Evaluation metrics
-  * Inference on new wallet data
+| File                                | Description                                                             |
+| ----------------------------------- | ----------------------------------------------------------------------- |
+| `credit_score_classification.ipynb` | Full implementation of the data pipeline, training, and inference.      |
+| `analysis.md`                       | Post-scoring analysis on wallet behavior, including distribution plots. |
+| `README.md`                         | This file. Project overview, method, and structure.                     |
 
 ---
 
-### 🧠 Approach
+## ⚙️ Running the Code
 
-* **Feature Engineering**: Derived behavioral signals like frequency, amount volatility, liquidation ratio, etc.
-* **Model**: A simple neural network trained with Binary Cross Entropy Loss to classify good vs. bad users, with post-processed scores mapped between `0-1000`.
-* **Evaluation**: Accuracy, loss tracking across epochs, and test-set evaluation.
+1. Clone the repo
 
----
+```bash
+git clone https://github.com/yourusername/defi-credit-score.git
+cd defi-credit-score
+```
 
-### ⚙️ Requirements
-
-* Python 3.8+
-* `pandas`, `numpy`, `torch`, `sklearn`, `matplotlib`
-
-Install via:
+2. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-### 🚀 Run the Notebook
-
-Open the notebook and run all cells:
+3. Launch the notebook
 
 ```bash
 jupyter notebook credit_score_classification.ipynb
 ```
+
+---
+
+## 🌍 Applications
+
+* Wallet scoring for creditworthiness in DeFi platforms
+* Bot/risk user identification
+* Integration with lending/borrowing protocols for safer transactions
+
+---
+
+## 📃 License
+
+MIT License
+
+---
+
+## 🚀 Contributors
+
+Built by \[Your Name], 2025
